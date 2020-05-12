@@ -170,7 +170,7 @@ def cifar_noniid(dataset, num_users):
     dict_users = {i: np.array([]) for i in range(num_users)}
     idxs = np.arange(num_shards*num_imgs)
     # labels = dataset.train_labels.numpy()
-    labels = np.array(dataset.train_labels)
+    labels = np.array(dataset.targets)
 
     # sort labels
     idxs_labels = np.vstack((idxs, labels))
@@ -179,7 +179,7 @@ def cifar_noniid(dataset, num_users):
 
     # divide and assign
     for i in range(num_users):
-        rand_set = set(np.random.choice(idx_shard, 2, replace=False))
+        rand_set = set(np.random.choice(idx_shard, 20, replace=False))
         idx_shard = list(set(idx_shard) - rand_set)
         for rand in rand_set:
             dict_users[i] = np.concatenate(
