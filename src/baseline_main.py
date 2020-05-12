@@ -5,6 +5,8 @@
 
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+import numpy as np
+import random
 
 import torch
 from torch.utils.data import DataLoader
@@ -15,7 +17,16 @@ from update import test_inference
 from models import MLP, CNNMnist, CNNFashion_Mnist, CNNCifar
 
 
+def setup_seed(seed):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.backends.cudnn.deterministic = True
+
+
 if __name__ == '__main__':
+    setup_seed(20)
     args = args_parser()
     if args.gpu:
         torch.cuda.set_device(args.gpu)
